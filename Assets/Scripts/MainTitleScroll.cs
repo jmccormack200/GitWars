@@ -10,7 +10,8 @@ public class MainTitleScroll : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+		transform.position.Set(-0.05f, 0.6f, 7.0f);
+		original_position = gameObject.transform.position;
 	}
 	
 	// Update is called once per frame
@@ -18,20 +19,29 @@ public class MainTitleScroll : MonoBehaviour {
 		TitleCrawl ();
 	}
 
-	void TitleCrawl(){
+	public void SetTrue(){
+		start_title = true;
+	}
+
+	public void SetFalse(){
+		start_title = false;
+	}
+
+	public void TitleCrawl(){
 
 		if (start_title == true) {
-			gameObject.GetComponent<Renderer> ().enabled = true;
-			transform.position.Set(-0.05f, 0.6f, 7.0f);
-			original_position = gameObject.transform.position;
 			start_title = false;
+			gameObject.transform.position = original_position;
+			gameObject.GetComponent<Renderer> ().enabled = true;
+
 		} else {
+			//was 158
 			if (transform.position.z <= 158) {
 				transform.position += Vector3.forward * Time.deltaTime * speed;
 			} else {
 				message.GetComponent<MessageScroll>().start = true;
-				//gameObject.GetComponent<Renderer>().enabled = false;
-				gameObject.transform.position = original_position;
+				message.GetComponent<MessageScroll> ().ScrollMessage ();
+				gameObject.GetComponent<Renderer>().enabled = false;
 			}
 		}
 	}

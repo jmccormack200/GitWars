@@ -3,33 +3,30 @@ using System.Collections;
 using SimpleJSON;
 
 public class GitGetter : MonoBehaviour {
-	public string url = "https://api.github.com/repos/jmccormack200/Stuntman/commits/master";
+	//Uncomment For Stuntman Project
+	//public string url = "https://api.github.com/repos/jmccormack200/Stuntman/commits/master";
+	//Uncomment for This Project
+	public string url = "https://api.github.com/repos/jmccormack200/GitWars/commits/master";
 	public string sha = "";
+	public string last_sha = "";
 	public string author = "";
 	public string message = "";
 
 	public GameObject title;
 	public GameObject scrolling_text;
 
-	public int repeatTime = 360;
+	public int repeatTime = 1;
 
 	void Start(){
-		print ("Test");
-		//InvokeRepeating ("fetch_commits", 10, 360.0f);
 		StartCoroutine(fetch_commits());
-	}
-
-	// Update is called once per frame
-	void Update () {
-			
 	}
 
 	IEnumerator fetch_commits(){
 		while (true) {
-			print ("test2");
+
 			WWW www = new WWW (url);
 			yield return www;
-			print ("test3");
+
 			var json = (JSON.Parse (www.text)) [0];
 
 			sha = json ["sha"].Value;
@@ -39,16 +36,24 @@ public class GitGetter : MonoBehaviour {
 			message = json ["commit"] ["message"].Value;
 			print ("message = " + message);
 
-			title.GetComponent<MainTitleScroll> ().start_title = true;
+			if (last_sha != sha) {
+				title.GetComponent<MainTitleScroll> ().SetTrue ();
+				title.GetComponent<MainTitleScroll> ().TitleCrawl ();
 
-			foreach (Transform transform in scrolling_text.transform) {
-				if (transform.name == "Episode") {
-					transform.GetComponent<TextMesh> ().text = "Episode:   " + sha.Substring (0, 7);
-				} else {
-					transform.GetComponent<MessageMeat> ().formatMessage (message, author);
+
+				foreach (Transform transform in scrolling_text.transform) {
+					if (transform.name == "Episode") {
+						transform.GetComponent<TextMesh> ().text = "Episode:   " + sha.Substring (0, 7);
+					} else {
+						transform.GetComponent<MessageMeat> ().formatMessage (message, author);
+					}
 				}
+				last_sha = sha;
 			}
+
+
 			yield return new WaitForSeconds (repeatTime);
+
 		}
 	}
 }
