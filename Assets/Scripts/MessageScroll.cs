@@ -15,7 +15,6 @@ public class MessageScroll : MonoBehaviour {
 
 	void Update(){
 		ScrollMessage ();
-		print (start);
 	}
 	public void ScrollMessage () {
 		

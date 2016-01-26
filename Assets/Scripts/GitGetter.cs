@@ -34,7 +34,7 @@ public class GitGetter : MonoBehaviour {
 			message = json ["commit"] ["message"].Value;
 
 			if (last_sha != sha) {
-				
+				print ("New Sha");
 				title.GetComponent<MainTitleScroll> ().PrepareCrawl ();
 				title.GetComponent<MainTitleScroll> ().TitleCrawl ();
 
@@ -51,6 +51,7 @@ public class GitGetter : MonoBehaviour {
 
 
 			yield return new WaitForSeconds (repeatTime);
+			print ("Have a loop");
 
 		}
 	}
