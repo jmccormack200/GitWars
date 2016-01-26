@@ -15,7 +15,7 @@ public class GitGetter : MonoBehaviour {
 	public GameObject title;
 	public GameObject scrolling_text;
 
-	public int repeatTime = 1;
+	public int repeatTime = 60;
 
 	void Start(){
 		StartCoroutine(fetch_commits());
@@ -30,14 +30,12 @@ public class GitGetter : MonoBehaviour {
 			var json = (JSON.Parse (www.text)) [0];
 
 			sha = json ["sha"].Value;
-			print ("Sha = " + sha);
 			author = json ["commit"] ["author"] ["name"].Value;
-			print ("name = " + author);
 			message = json ["commit"] ["message"].Value;
-			print ("message = " + message);
 
 			if (last_sha != sha) {
-				title.GetComponent<MainTitleScroll> ().SetTrue ();
+				
+				title.GetComponent<MainTitleScroll> ().PrepareCrawl ();
 				title.GetComponent<MainTitleScroll> ().TitleCrawl ();
 
 

@@ -30,19 +30,22 @@ public class MainTitleScroll : MonoBehaviour {
 	public void TitleCrawl(){
 
 		if (start_title == true) {
-			start_title = false;
-			gameObject.transform.position = original_position;
-			gameObject.GetComponent<Renderer> ().enabled = true;
-
-		} else {
 			//was 158
-			if (transform.position.z <= 158) {
+			print("New Sha");
+			if (transform.position.z <= 50) {
 				transform.position += Vector3.forward * Time.deltaTime * speed;
 			} else {
-				message.GetComponent<MessageScroll>().start = true;
+				start_title = false;
+				message.GetComponent<MessageScroll> ().start = true;
 				message.GetComponent<MessageScroll> ().ScrollMessage ();
-				gameObject.GetComponent<Renderer>().enabled = false;
+				gameObject.GetComponent<Renderer> ().enabled = false;
 			}
 		}
+	}
+
+	public void PrepareCrawl(){
+		SetTrue ();
+		gameObject.transform.position = original_position;
+		gameObject.GetComponent<Renderer> ().enabled = true;
 	}
 }
