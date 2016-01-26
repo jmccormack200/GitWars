@@ -51,8 +51,6 @@ public class GitGetter : MonoBehaviour {
 
 
 			yield return new WaitForSeconds (repeatTime);
-			print ("Have a loop");
-
 		}
 	}
 }

@@ -31,7 +31,7 @@ public class MainTitleScroll : MonoBehaviour {
 
 		if (start_title == true) {
 			//was 158
-			if (transform.position.z <= 50) {
+			if (transform.position.z <= 155) {
 				transform.position += Vector3.forward * Time.deltaTime * speed;
 			} else {
 				start_title = false;
